@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="chat.css">
+
+    <style>
+        .card-time {
+            font-size: 10px;
+        }
+
+        #messages {
+            margin-bottom: 70px;
+        }
+    </style>
+</head>
+
+<body class="shrine-login">
+
+    <div class="container">
+        <div id="messages">
+        </div>
+    </div>
+
+    <nav class="fixed-bottom navbar nav-fill navbar-expand-md navbar-dark bg-dark">
+        <div class="d-flex flex-grow-1">
+            <a href="/" class="navbar-brand d-none d-sm-block">Oie</a>
+            <form class="mr-2 my-auto w-100 d-inline-block order-1 form-inline ">
+                <div class="input-group">
+                    <input type="text" class="form-control border border-right-0" id="name_msg" name="name_msg"
+                        placeholder="Seu Nome.">
+                    <span class="input-group-append">&nbsp;</span>
+                    <input type="text" class="form-control border border-right-0" id="message" name="message"
+                        placeholder="Message">
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-light border border-left-0 onSendMsg" type="button">
+                            <i class="fa fa-send"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+
+    <script  type="module" src="chat.js"></script>
+
+
+    <div id="tplCardMessageID" hidden>
+        <div class="card card-bloco mb-3" style="display: none;">
+            <div class="card-header card-name">
+                <!-- name -->
+            </div>
+            <div class="card-body text-secondary">
+                <p class="card-text card-message">
+                    <!-- Message -->
+                </p>
+                <p class="card-text card-time text-right">
+                    <!-- time -->
+                </p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
