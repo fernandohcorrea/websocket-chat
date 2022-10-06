@@ -2,6 +2,10 @@ $(document).ready(() => {
 
     const chat = {
 
+        ws: null,
+
+        username: null,
+
         cfg : {
             host : {
                 ps       : '/',
@@ -20,6 +24,17 @@ $(document).ready(() => {
         {
             let scope = this;
             await scope.loadCfg(scope);
+
+            $('.onSendMsg').click(function () {
+                scope.fire();
+            })
+
+            scope.ws.onmessage = (event) => {
+                const dataJson = JSON.parse(event.data);
+                dataJson.forEach(data => {
+                    scope.addMessage(data, scope)
+                });
+            };
         },
 
         loadCfg : async (scope) => {
@@ -29,13 +44,48 @@ $(document).ready(() => {
                 url: urlLoadCfg
             });
 
-            console.table(process);
-            debugger
+            scope.ws = new WebSocket('ws://localhost:44444')
+            scope.ws.onopen = () => {
+                console.log('Now connected');
+            };
+        },
 
+        fire : function() {
+            let scope = this;
+            scope.username = document.getElementById('name_msg').value || '???'
 
-            // const ws = new WebSocket('ws://localhost:44444')
-            // console.table(url);
-            
+            const data = [{
+                username: scope.username,
+                message: document.getElementById('message').value
+            }];
+
+            const dataJson = JSON.stringify(data);
+
+            scope.ws.send(`${dataJson}`);
+            document.getElementById('message').value = '';
+        },
+
+        addMessage : function(dataJson, scope){
+            let msg = $("#tplCardMessageID").find('div.card-bloco').clone(true)[0];
+
+            msg = $(msg);
+
+            msg.find('div.card-name').html(dataJson.username);
+            msg.find('p.card-message').html(dataJson.message);
+            msg.find('p.card-time').html(dataJson.time);
+
+            $("#messages").append(msg);
+
+            if(dataJson.username == scope.username){
+                $("#messages div:last-child").addClass('border-primary');
+            } else {
+                $("#messages div:last-child").addClass('text-right');
+            }
+
+            $("#messages div:last-child").show(1000);
+
+            $("html, body").animate({ scrollTop: $(document).height() }, 1500);
+
         },
 
         getRouteTo : function(path) 
@@ -54,68 +104,5 @@ $(document).ready(() => {
 
     chat.onReady();
 });
+  
 
-   
-
-
-    // const ws = new WebSocket('wss://ddd44564.ngrok.io');
-
-    // let username = '???'
-
-    // const getElement = (id) => document.getElementById(id);
-
-    // const addMessage = (dataJson) => {
-        
-    //     var msg = $("#tplCardMessageID").find('div.card-bloco').clone(true)[0];
-        
-    //     msg = $(msg);
-
-    //     msg.find('div.card-name').html(dataJson.username);
-    //     msg.find('p.card-message').html(dataJson.message);
-    //     msg.find('p.card-time').html(dataJson.time);
-
-    //     $("#messages").append(msg);
-
-    //     if(dataJson.username == username){
-    //         $("#messages div:last-child").addClass('border-primary');
-    //     } else {
-    //         $("#messages div:last-child").addClass('text-right');
-    //     }
-
-        
-    //     $("#messages div:last-child").show(1000);
-
-    //     $("html, body").animate({ scrollTop: $(document).height() }, 1500);
-
-    // };
-
-
-
-    // ws.onopen = () => {
-    //     console.log('Now connected');
-    // };
-
-    // ws.onmessage = (event) => {
-    //     const dataJson = JSON.parse(event.data);
-    //     dataJson.forEach(addMessage);
-    // };
-
-
-    // function fire() {
-    //     username = getElement('name_msg').value || '???'
-
-    //     const data = [{
-    //         username: username,
-    //         message: getElement('message').value
-    //     }];
-
-    //     const dataJson = JSON.stringify(data);
-
-    //     ws.send(`${dataJson}`);
-    //     getElement('message').value = '';
-    // };
-
-    // $('.onSendMsg').click(function () {
-    //     fire();
-    // })
-//})
