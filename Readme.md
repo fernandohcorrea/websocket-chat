@@ -1,7 +1,10 @@
-# Instalar Dependências
+## APP
 
+Chat criado para explicar conceitos de uso do Websocket
 
-## NPM
+## Instalar Dependências
+
+### NPM
 
 ```bash
 $ npm install
